@@ -10,12 +10,16 @@ class Admin extends Validate
 {
     protected $rule = [
         'username|管理员账户' => 'require',
-        'password|密码' => 'require',
+        'password|新密码' => 'require',
 
         'conpass|确认密码' => 'require|confirm:password',
         'nickname|昵称' => 'require',
         'email|邮箱' => 'require|email|unique:admin',
         'code|验证码' => 'require'
+    ];
+
+    protected $message=[
+        'compass.confirm' => '两次密码输入不一致！'
     ];
 
     //登录验证场景
