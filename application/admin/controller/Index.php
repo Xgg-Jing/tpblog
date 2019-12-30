@@ -49,4 +49,50 @@ class Index extends Controller
         }
         return view();
     }
+    //忘记密码,发送验证码
+    public function forget(){
+        if (request()->isAjax()){
+            $code =mt_rand(1000,9999);
+            session('code',$code);
+            $data = [
+                'email' =>input('post.email')
+            ];
+            $result = $this->validate(
+              $data,
+                [
+                    'email'   => 'require|email',
+                ]);
+            if(true !== $result){
+                // 验证失败 输出错误信息
+               return $this->error('请输入正确的邮箱！');
+            }
+
+
+            $result = mailto($data['email'],'重置密码验证码','您的重置密码验证码是：'.$code);
+            if ($result){
+                $this->success('验证码发送成功！');
+            }else{
+                $this->error('验证码发送失败！');
+            }
+        }
+    return view();
+    }
+
+    //重置密码
+    public function reset(){
+        $data =[
+            'email' => input('post.email'),
+            'code'=> input('post.code'),
+            'password' => input('post.newpass'),
+            'conpass'  => input('post.connew')
+        ];
+        $result = model('Admin')->reset($data);
+        if ($result == 1){
+            $this->success('密码重置成功！','admin/index/login');
+        }else{
+            $this->error($result);
+        }
+
+        return view();
+    }
 }

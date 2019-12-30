@@ -52,14 +52,36 @@ class Admin extends Model
 
         //去掉确认密码字段unset($data['conpass']);
         $result = $this->allowField(true)->save($data);
+        mailto($data['email'],'z注册管理员成功!','注册管理员成功！');
 
         if ($result){
-
-          mailto($data['email'],'z注册管理员成功!','注册管理员成功！');
-            return 1;
+          return 1;
         }else{
             return '注册失败！';
         }
     }
 
+    //重置密码
+    public function reset($data){
+        $validate = new \app\common\validate\Admin();
+
+
+        if (!$validate->scene('reset')->check($data)){
+
+            return $validate->getError();
+        }
+
+        if ($data['code'] !=session('code')){
+            return '验证码不正确！';
+        }
+        $adminInfo = $this->where('email',$data['email'])->find();
+        $adminInfo->password =$data['password'];
+        $result= $adminInfo->save();
+        if($result){
+            return 1;
+        }else{
+            return '重置密码失败！';
+        }
+
+    }
 }
