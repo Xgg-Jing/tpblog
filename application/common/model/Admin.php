@@ -38,6 +38,6 @@ class Admin extends Model
             return '用户名或者密码错误！';
         }
 
-        //zhu
+        //zhudd
     }
 }
