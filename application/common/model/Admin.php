@@ -39,4 +39,27 @@ class Admin extends Model
         }
 
     }
+
+    //注册
+    public function register($data){
+
+        $validate = new \app\common\validate\Admin();
+
+        if (!$validate->scene('register')->check($data)){
+
+            return $validate->getError();
+        }
+
+        //去掉确认密码字段unset($data['conpass']);
+        $result = $this->allowField(true)->save($data);
+
+        if ($result){
+
+          mailto($data['email'],'z注册管理员成功!','注册管理员成功！');
+            return 1;
+        }else{
+            return '注册失败！';
+        }
+    }
+
 }

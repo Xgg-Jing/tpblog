@@ -11,4 +11,5 @@
 
 Route::group('admin',function(){
     Route::rule('/','admin/index/login','get|post');
+    Route::rule('/register','admin/index/register','get|post');
 });

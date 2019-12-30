@@ -15,7 +15,7 @@
 <div class="login-container">
     <div class="loginbox bg-white">
         <form>
-            <div class="loginbox-title">登录</div>
+            <div class="loginbox-title">注册</div>
 
             <div class="loginbox-or">
                 <div class="or-line"></div>
@@ -26,14 +26,21 @@
             <div class="loginbox-textbox">
                 <input type="password" class="form-control" name="password" placeholder="密码" />
             </div>
-            <div class="loginbox-forgot">
-                <a href="">忘记密码?</a>
+            <div class="loginbox-textbox">
+                <input type="password" class="form-control" name="conpass" placeholder="确认密码" />
             </div>
+            <div class="loginbox-textbox">
+                <input type="text" class="form-control" name="nickname" placeholder="昵称" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="text" class="form-control" name="email" placeholder="邮箱" />
+            </div>
+
             <div class="loginbox-submit">
-                <input type="button" class="btn btn-primary btn-block" id= "login" value="登录">
+                <input type="button" class="btn btn-primary btn-block" id= "register" value="注册">
             </div>
             <div class="loginbox-signup">
-                <a href="{:url('admin/index/register')}">注册账户</a>
+                <a href="{:url('admin/index/login')}">返回登录</a>
             </div>
         </form>
 
@@ -64,14 +71,14 @@
     });
 
     $(function(){
-        $('#login').click(function(){
-            console.log($('form').serialize());
+        $('#register').click(function(){
             $.ajax({
-                url:"{:url('admin/index/login')}",
+                url:"{:url('admin/index/register')}",
                 type:'post',
                 data:$('form').serialize(),
                 dataType:'json',
                 success:function(data){
+                    console.log(data);
                 if (data.code==1){
                     layer.msg(data.msg,{
                         icon:6,
@@ -81,7 +88,7 @@
                     });
                 }else{
                     layer.open({
-                        title:'登录失败',
+                        title:'注册失败',
                         content:data.msg,
                         icon:5,
                         anim:6,
