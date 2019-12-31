@@ -14,4 +14,8 @@ Route::group('admin',function(){
     Route::rule('/register','admin/index/register','get|post');
     Route::rule('/forget','admin/index/forget','get|post');
     Route::rule('/reset','admin/index/reset','post');
+    Route::rule('/index','admin/home/index','get');
+    Route::rule('/logout','admin/home/logout','post');
+    Route::rule('/catelist','admin/cate/list','get');
+    Route::rule('/cateadd','admin/cate/add','get');
 });

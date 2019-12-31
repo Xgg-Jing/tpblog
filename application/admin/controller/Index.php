@@ -2,11 +2,18 @@
 
 namespace app\admin\controller;
 
-use app\common\model\Admin;
 use think\Controller;
 
 class Index extends Controller
 {
+    //重复登录过滤
+    public function initialize()
+    {
+        if (session('?admin.id')){
+            $this->redirect('admin/home/index');
+        }
+    }
+
     //登陆方法
     public function login(){
         if(request()->isAjax()){
